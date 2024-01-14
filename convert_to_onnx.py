@@ -13,6 +13,8 @@ base.to("cuda")
 apply_patch(base, ratio=0.5)
 
 
+print(base)
+
 
 # refiner = DiffusionPipeline.from_pretrained(
 #     "/workspace/stable-diffusion-xl-refiner-1.0",
