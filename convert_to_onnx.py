@@ -10,7 +10,7 @@ base = DiffusionPipeline.from_pretrained(
 )
 base.to("cuda")
 
-apply_patch(model, ratio=0.5)
+apply_patch(base, ratio=0.5)
 
 
 
