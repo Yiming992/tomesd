@@ -98,12 +98,15 @@ def bipartite_soft_matching_random2d(metric: torch.Tensor,
 
     def merge(x: torch.Tensor, mode="mean") -> torch.Tensor:
         src, dst = split(x)
-        n, t1, c = src.shape
+        # n, t1, c = src.shape
         
-        unm = gather(src, dim=-2, index=unm_idx.expand(n, t1 - r, c))
-        src = gather(src, dim=-2, index=src_idx.expand(n, r, c))
-        dst = dst.scatter_reduce(-2, dst_idx.expand(n, r, c), src, reduce=mode)
+        # unm = gather(src, dim=-2, index=unm_idx.expand(n, t1 - r, c))
+        # src = gather(src, dim=-2, index=src_idx.expand(n, r, c))
+        # dst = dst.scatter_reduce(-2, dst_idx.expand(n, r, c), src, reduce=mode)
 
+        # return torch.cat([unm, dst], dim=1)
+        n, t1, c = int(src.shape[0]), int(src.shape[1]), int(src.shape[2])        
+        unm = gather(src, dim=1, index=unm_idx.expand(n, t1 - r, c))
         return torch.cat([unm, dst], dim=1)
 
     def unmerge(x: torch.Tensor) -> torch.Tensor:
