@@ -71,6 +71,7 @@ def bipartite_soft_matching_random2d(metric: torch.Tensor,
 
         # rand_idx is currently dst|src, so split them
         num_dst = hsy * wsx
+        print(num_dst)
         a_idx = rand_idx[:, num_dst:, :] # src
         b_idx = rand_idx[:, :num_dst, :] # dst
 
@@ -90,6 +91,7 @@ def bipartite_soft_matching_random2d(metric: torch.Tensor,
 
         # Find the most similar greedily
         node_max, node_idx = scores.max(dim=-1)
+        print(node_max.shape)
         edge_idx = node_max.argsort(dim=-1, descending=True)[..., None]
 
         unm_idx = edge_idx[..., r:, :]  # Unmerged Tokens
