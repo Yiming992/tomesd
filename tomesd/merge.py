@@ -94,7 +94,7 @@ def bipartite_soft_matching_random2d(metric: torch.Tensor,
         node_max, node_idx = scores.max(dim=-1)
         print(node_max.shape)
         edge_idx = node_max.argsort(dim=-1, descending=True)[..., None]
-
+        print(edge_idx)
         unm_idx = edge_idx[..., r:, :]  # Unmerged Tokens
         src_idx = edge_idx[..., :r, :]  # Merged Tokens
         dst_idx = gather(node_idx[..., None], dim=-2, index=src_idx)
