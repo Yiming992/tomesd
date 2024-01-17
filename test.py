@@ -5,8 +5,8 @@ import time
 
 pipeline = StableDiffusionXLPipeline.from_pretrained("/workspace/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, variant="fp16").to("cuda")
 
-batch_size = 4
-resolution = 896
+batch_size = 1
+resolution = 1024
 trials = 2
 
 tt = 0
