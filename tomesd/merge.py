@@ -90,6 +90,7 @@ def bipartite_soft_matching_random2d(metric: torch.Tensor,
         r = min(a.shape[1], r)
 
         # Find the most similar greedily
+        print(scores.shape)
         node_max, node_idx = scores.max(dim=-1)
         print(node_max.shape)
         edge_idx = node_max.argsort(dim=-1, descending=True)[..., None]
@@ -109,7 +110,9 @@ def bipartite_soft_matching_random2d(metric: torch.Tensor,
         # return torch.cat([unm, dst], dim=1)
         n, t1, c = int(src.shape[0]), int(src.shape[1]), int(src.shape[2])        
         unm = gather(src, dim=1, index=unm_idx.expand(n, t1 - r, c))
-        return torch.cat([unm, dst], dim=1)
+        out = torch.cat([unm, dst], dim=1)
+        print(out.shape)
+        return out
 
     def unmerge(x: torch.Tensor) -> torch.Tensor:
         unm_len = unm_idx.shape[1]
