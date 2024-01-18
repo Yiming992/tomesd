@@ -222,7 +222,7 @@ def apply_patch(
         diffusion_model = model.model.diffusion_model
     else:
         # Supports "pipe.unet" and "unet"
-        diffusion_model = model.unet if hasattr(model, "unet") else model
+        diffusion_model = model.unetxl if hasattr(model, "unetxl") else model
 
     diffusion_model._tome_info = {
         "size": None,
