@@ -246,6 +246,7 @@ def apply_patch(
             make_tome_block_fn = make_diffusers_tome_block if is_diffusers else make_tome_block
             module.__class__ = make_tome_block_fn(module.__class__)
             module._tome_info = diffusion_model._tome_info
+            print(module._tome_info)
 
             # Something introduced in SD 2.0 (LDM only)
             if not hasattr(module, "disable_self_attn") and not is_diffusers:
