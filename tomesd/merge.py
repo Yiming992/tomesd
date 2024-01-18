@@ -71,7 +71,7 @@ def bipartite_soft_matching_random2d(metric: torch.Tensor,
 
         # rand_idx is currently dst|src, so split them
         num_dst = hsy * wsx
-        print(num_dst)
+
         a_idx = rand_idx[:, num_dst:, :] # src
         b_idx = rand_idx[:, :num_dst, :] # dst
 
@@ -90,16 +90,13 @@ def bipartite_soft_matching_random2d(metric: torch.Tensor,
         r = min(a.shape[1], r)
 
         # Find the most similar greedily
-        print(scores.shape)
         node_max, node_idx = scores.max(dim=-1)
-        print(node_max.shape)
         edge_idx = node_max.argsort(dim=-1, descending=True)[..., None]
-        print(edge_idx.shape)
+
         unm_idx = edge_idx[..., r:, :]  # Unmerged Tokens
         src_idx = edge_idx[..., :r, :]  # Merged Tokens
         dst_idx = gather(node_idx[..., None], dim=-2, index=src_idx)
-        print(node_idx.shape)
-        print(dst_idx.shape)
+
 
     def merge(x: torch.Tensor, mode="mean") -> torch.Tensor:
         src, dst = split(x)
@@ -110,12 +107,10 @@ def bipartite_soft_matching_random2d(metric: torch.Tensor,
         # dst = dst.scatter_reduce(-2, dst_idx.expand(n, r, c), src, reduce=mode)
 
         # return torch.cat([unm, dst], dim=1)
-        n, t1, c = int(src.shape[0]), int(src.shape[1]), int(src.shape[2])     
-        print(dst.shape)   
+        n, t1, c = int(src.shape[0]), int(src.shape[1]), int(src.shape[2])       
         unm = gather(src, dim=1, index=unm_idx.expand(n, t1 - r, c))
-        print(unm.shape)
         out = torch.cat([unm, dst], dim=1)
-        print(out.shape)
+
         return out
 
     def unmerge(x: torch.Tensor) -> torch.Tensor:
